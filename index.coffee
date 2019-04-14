@@ -1,7 +1,7 @@
 debug = require('debug') 'require-ancestor'
 # R = require 'ramda'
 path = require 'path'
-# fs = require 'fs'
+fs = require 'fs'
 APP_PATH = null
 
 callStack = (cnt = 1)->
@@ -28,8 +28,10 @@ tryRequire = (full_id)->
   try
     debug 'tryRequire', full_id
     return require full_id
-  catch
-    return null
+  catch error
+    if error.message.includes "Cannot find Module"
+      return null
+    throw error
 requireAncestor = (module_id)->
   stack = callStack(1)
   debug 'stack', stack
