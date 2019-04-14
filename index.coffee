@@ -29,7 +29,7 @@ tryRequire = (full_id)->
     debug 'tryRequire', full_id
     return require full_id
   catch error
-    if error.message.includes "Cannot find Module"
+    if error.message.includes "Cannot find module"
       return null
     throw error
 requireAncestor = (module_id)->
