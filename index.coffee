@@ -14,13 +14,22 @@ callStack = (cnt = 1)->
   # We want our caller's frame. It's index into |stack| depends on the
   # browser and browser version, so we need to search for the second frame:
   toInfo = (line)->
-    frameRE = /([^\(]+?([^\\\/]+)):(\d+):(?:\d+)[^\d]*$/
-    match = frameRE.exec(line)
+    debug 'toInfo', line
+    parts = /^\s+(\S+)\s+(\S+)\s+(.+)$/.exec(line)[1...]
+    debug 'parts', parts
+    [at, call_name, loc] = parts
+    #
+    # frameRE = /([^\(]+?([^\\\/]+)):(\d+):(?:\d+)[^\d]*$/
+    # match = frameRE.exec(line)
     # console.log 'toInfo', match
-    return
-      filepath: match[1]
-      file: match[2]
-      line: match[3]
+    locataion = /^\((.+):(\d+):(?:(\d+))\)$/.exec(loc)[1...]
+    debug 'locataion =', locataion
+    [filepath, line, col] = locataion
+    file = path.basename filepath
+    return {filepath, file, line, col}
+      # filepath: match[1]
+      # file: match[2]
+      # line: match[3]
   debug 'stack', stacks
   stack_info = stacks.map toInfo
 
