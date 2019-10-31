@@ -7,14 +7,14 @@ Module._resolveFilename = (request, parentModule, isMain, options)->
     dir = path.dirname parentModule.filename
     return getAncestor dir, request, options
   else
-    console.log '_resolveFilename', request, parentModule, isMain, options
-    ret = oldResolveFilename request, parentModule, isMain, options
-    console.log 'ret =', ret
-    return ret
+    # console.log '_resolveFilename', request, parentModule, isMain, options
+    return oldResolveFilename request, parentModule, isMain, options
+    # console.log 'ret =', ret
+    # return ret
 
 getAncestor = (from_dir, request, options)->
   request_sub = request[2..]
-  dir = from_dir
+  dir = path.dirname from_dir
   while true
     try
       renamed = path.join dir, request_sub
