@@ -15,18 +15,18 @@ Module._resolveFilename = (request, parentModule, isMain, options)->
 getAncestor = (from_dir, request, options)->
   request_sub = request[2..]
   dir = path.dirname from_dir
-  while true
+  while dir isnt null
     try
       renamed = path.join dir, request_sub
       return require.resolve renamed, options
     catch error
       dir = getUpDir dir
-
-getUpDir = (dir)->
-  up_dir = path.dirname dir
-  return up_dir if up_dir isnt dir
-
   err = new Error "Cannot find module '#{request}'"
   err.code = 'MODULE_NOT_FOUND'
   err.requireStack = []
   throw err
+
+getUpDir = (dir)->
+  up_dir = path.dirname dir
+  return up_dir if up_dir isnt dir
+  return null
