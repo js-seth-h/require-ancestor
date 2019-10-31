@@ -1,6 +1,6 @@
 {
   "name": "require-ancestor",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "index.js",
   "repository": "git@github.com:js-seth-h/require-ancestor.git",
   "author": "js <js.seth.h@gmail.com>",
